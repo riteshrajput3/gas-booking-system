@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LPG Booking System</title>
+  <style>
+    /* General styles */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f7f8fa;
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    h1 {
+      text-align: center;
+      color: #4CAF50;
+    }
+
+    /* Form container */
+    .form-container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: #555;
+    }
+
+    input, textarea, select, button {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      border-color: #4CAF50;
+      outline: none;
+      box-shadow: 0 0 4px rgba(76, 175, 80, 0.5);
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .form-container {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h1>LPG Gas Booking</h1>
+    <form id="bookingForm">
+      <label for="consumerId">Consumer ID:</label>
+      <input type="text" id="consumerId" name="consumerId" placeholder="Enter Consumer ID" required>
+
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" placeholder="Enter Full Name" required>
+
+      <label for="phone">Phone:</label>
+      <input type="text" id="phone" name="phone" placeholder="Enter Phone Number" required>
+
+      <label for="address">Address:</label>
+      <textarea id="address" name="address" placeholder="Enter Full Address" required></textarea>
+
+      <label for="cylinderType">Cylinder Type:</label>
+      <select id="cylinderType" name="cylinderType" required>
+        <option value="" disabled selected>Select Cylinder Type</option>
+        <option value="domestic">Domestic</option>
+        <option value="commercial">Commercial</option>
+      </select>
+
+      <label for="quantity">Quantity:</label>
+      <input type="number" id="quantity" name="quantity" min="1" placeholder="Enter Quantity" required>
+
+      <button type="submit">Book Now</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('bookingForm').addEventListener('submit', async function (event) {
+      event.preventDefault();
+
+      const formData = new FormData(event.target);
+      const data = Object.fromEntries(formData.entries());
+
+      const response = await fetch('/book', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      const message = await response.text();
+      alert(message);
+    });
+  </script>
+</body>
+</html>
